@@ -1,0 +1,21 @@
+product_id,product_name,category,image_url,price,description,liked_count
+1,Phone,Electronics,https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80,29999,Latest smartphone with advanced features and premium design,1250
+2,Phone Cover,Accessories,https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500,599,Protective case for your phone with shock absorption,890
+3,Earphones,Electronics,https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80,1499,High-quality wireless earphones with noise cancellation,2100
+4,Power Bank,Electronics,assets/powerbank.png,1999,Portable charger with fast charging capability,1560
+5,Laptop,Electronics,https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80,64999,High-performance laptop for work and gaming,980
+6,Mouse,Electronics,https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=800&q=80,799,Ergonomic wired mouse with precision tracking,1340
+7,Keyboard,Electronics,https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80,1499,Mechanical keyboard with RGB backlighting,1120
+8,Tablet,Electronics,https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=800&q=80,24999,10-inch tablet perfect for reading and productivity,750
+9,Hard Drive,Electronics,assets/hard_drive.png,4500,Portable 1TB external hard drive for data backup,890
+10,Cooling Pad,Accessories,assets/cooling_pad.png,1200,High-performance cooling pad with dual silent fans,540
+11,Charger,Electronics,assets/charger.png,1299,Fast charger for quick power delivery,1250
+12,Headphones,Electronics,https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80,2499,Over-ear headphones with superior sound quality,1680
+13,Webcam,Electronics,assets/webcam.png,1999,HD webcam with auto-focus and noise reduction,920
+14,Speaker,Accessories,https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=800&q=80,3499,Bluetooth speaker with 360-degree sound,1100
+15,Cable,Accessories,assets/cable.png,299,Charging cable with durable braided design,2450
+16,Smart Watch,Electronics,https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80,8999,Smartwatch with fitness and health tracking,1980
+17,Bluetooth Mouse,Electronics,https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80,1299,Wireless mouse with long battery life,1450
+18,Laptop Stand,Accessories,https://images.unsplash.com/photo-1615751072497-5f5169febe17?auto=format&fit=crop&w=800&q=80,1999,Adjustable laptop stand for better ergonomics,780
+19,USB Hub,Accessories,assets/usbhub.png,999,Multi-port USB hub for connecting multiple devices,1020
+20,Screen Protector,Accessories,assets/screen_protector.png,399,Tempered glass screen protector,1240

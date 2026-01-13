@@ -1,0 +1,69 @@
+Phone,Earphones,Charger
+Phone,Power Bank,Phone Cover
+Phone,Screen Protector,Phone Cover
+Phone,Earphones,Power Bank
+Phone,Smart Watch,Earphones
+Phone,Charger,Cable
+Phone,Phone Cover,Screen Protector
+Phone,Power Bank,Cable
+Phone,Headphones
+Phone,Bluetooth Mouse
+Laptop,Mouse,Keyboard
+Laptop,Mouse,USB Hub
+Laptop,Keyboard,USB Hub
+Laptop,Webcam,Mouse
+Laptop,Laptop Stand,Mouse
+Laptop,Speaker,Webcam
+Laptop,Mouse,Bluetooth Mouse
+Laptop,Keyboard,Speaker
+Laptop,USB Hub,Cable
+Laptop,Headphones
+Tablet,Hard Drive,Cooling Pad
+Tablet,Hard Drive,Screen Protector
+Tablet,Cooling Pad,Headphones
+Tablet,Hard Drive,Headphones
+Tablet,Screen Protector,Cooling Pad
+Tablet,Speaker
+Tablet,Bluetooth Mouse
+Tablet,Keyboard
+Tablet,USB Hub
+Tablet,Cable
+Mouse,Keyboard
+Mouse,USB Hub
+Mouse,Bluetooth Mouse
+Mouse,Cable
+Mouse,Speaker
+Keyboard,Mouse
+Keyboard,USB Hub
+Keyboard,Speaker
+Keyboard,Cable
+Earphones,Phone
+Earphones,Smart Watch
+Earphones,Power Bank
+Charger,Phone
+Charger,Cable
+Charger,Power Bank
+Power Bank,Phone
+Power Bank,Cable
+Power Bank,Smart Watch
+Phone Cover,Screen Protector
+Phone Cover,Phone
+Screen Protector,Phone
+Screen Protector,Tablet
+Smart Watch,Phone
+Smart Watch,Earphones
+USB Hub,Laptop
+USB Hub,Keyboard
+USB Hub,Mouse
+Laptop Stand,Laptop
+Laptop Stand,Mouse
+Webcam,Laptop
+Webcam,Speaker
+Speaker,Laptop
+Speaker,Tablet
+Cable,Charger
+Cable,USB Hub
+Headphones,Phone
+Headphones,Tablet
+Bluetooth Mouse,Mouse
+Bluetooth Mouse,Laptop
