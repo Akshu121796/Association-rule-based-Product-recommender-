@@ -135,7 +135,9 @@ def get_product_details(product_name):
     )
 
 def liked_dashboard():
-
+    # Helper to return updates
+    def clear_main(): return gr.update(visible=False, value=[])
+    
     if not user_liked.get(current_user):
         msg = """
         <div style='text-align:center; padding:100px 20px;'>
@@ -143,7 +145,8 @@ def liked_dashboard():
             <p style='font-size: 1.2em; color: #9ca3af;'>Start browsing to find items you love!</p>
         </div>
         """
-        return [], [], gr.update(visible=False), gr.update(visible=False), gr.update(visible=False), gr.update(visible=False, value=msg)
+        # OUTPUTS: [gallery_main, gallery_secondary, current_products_state, input_group, detail_view, empty_msg]
+        return clear_main(), gr.update(visible=False, value=[]), [], gr.update(visible=False), gr.update(visible=False), gr.update(visible=True, value=msg)
     
     gallery_data = []
     product_list = []
@@ -154,9 +157,12 @@ def liked_dashboard():
         gallery_data.append(format_gallery_item(row, "❤️ Liked"))
         product_list.append(p)
         
-    return gallery_data, product_list, gr.update(visible=False), gr.update(visible=True), gr.update(visible=False), gr.update(visible=False, value="")
+    # Show Secondary, Hide Main
+    return clear_main(), gr.update(visible=True, value=gallery_data), product_list, gr.update(visible=False), gr.update(visible=False), gr.update(visible=False, value="")
 
 def cart_dashboard():
+    def clear_main(): return gr.update(visible=False, value=[])
+
     if not user_cart.get(current_user):
         msg = """
         <div style='text-align:center; padding:100px 20px;'>
@@ -164,7 +170,7 @@ def cart_dashboard():
             <p style='font-size: 1.2em; color: #9ca3af;'>Add items to your cart to see them here.</p>
         </div>
         """
-        return [], [], gr.update(visible=False), gr.update(visible=False), gr.update(visible=False), gr.update(visible=False, value=msg)
+        return clear_main(), gr.update(visible=False, value=[]), [], gr.update(visible=False), gr.update(visible=False), gr.update(visible=True, value=msg)
     
     gallery_data = []
     product_list = []
@@ -174,13 +180,15 @@ def cart_dashboard():
         gallery_data.append(format_gallery_item(row, "🛒 In Cart"))
         product_list.append(p)
         
-    return gallery_data, product_list, gr.update(visible=False), gr.update(visible=True), gr.update(visible=False), gr.update(visible=False, value="")
+    return clear_main(), gr.update(visible=True, value=gallery_data), product_list, gr.update(visible=False), gr.update(visible=False), gr.update(visible=False, value="")
 
-def recent_dashboard():    
+def recent_dashboard():
+    def clear_main(): return gr.update(visible=False, value=[])
+    
     recent_items = user_recent.get(current_user, [])[::-1]
     
     if not recent_items:
-        return [], [], gr.update(visible=False), gr.update(visible=False), gr.update(visible=False), gr.update(visible=False, value="<div style='text-align:center'>No history</div>")
+        return clear_main(), gr.update(visible=False, value=[]), [], gr.update(visible=False), gr.update(visible=False), gr.update(visible=True, value="<div style='text-align:center'>No history</div>")
         
     gallery_data = []
     product_list = []
@@ -192,20 +200,22 @@ def recent_dashboard():
         gallery_data.append(format_gallery_item(row, "🕒 Recent"))
         product_list.append(p)
         
-    return gallery_data, product_list, gr.update(visible=False), gr.update(visible=True), gr.update(visible=False), gr.update(visible=False, value="")
+    return clear_main(), gr.update(visible=True, value=gallery_data), product_list, gr.update(visible=False), gr.update(visible=False), gr.update(visible=False, value="")
 
 
 def home_dashboard():
-    
+    # Show Main, Hide Secondary
     return (
-        gr.update(visible=True), 
+        gr.update(visible=True, value=[]), # gallery_main (visible but empty initially or reset?)
+        gr.update(visible=False, value=[]), # gallery_secondary
         gr.update(visible=False), 
-        gr.update(visible=False), 
-        gr.update(visible=True, value="<div style='text-align:center; padding:50px;'><h3>👋 Welcome Back!</h3><p>Select a product to get started.</p></div>")
+        gr.update(visible=True, value="<div style='text-align:center; padding:50px;'><h3>👋 Welcome Back!</h3><p>Select a product to get started.</p></div>"),
+        gr.update(visible=True), # input_group
     )
 
 
 def recommend(product):
+    # Show Main, Hide Secondary
     
     if current_user:
         if current_user not in user_recent:
@@ -238,7 +248,8 @@ def recommend(product):
     top_recs = sorted_recs[:4]
     
     if not top_recs:
-        return [], [], gr.update(visible=True), gr.update(visible=False), gr.update(visible=False), gr.update(visible=True, value="<div style='text-align:center'>No recommendations found</div>")
+        # gallery_main, gallery_secondary, current_products_state, input_group, detail_view, empty_msg
+        return gr.update(visible=True, value=[]), gr.update(visible=False), [], gr.update(visible=True), gr.update(visible=False), gr.update(visible=True, value="<div style='text-align:center'>No recommendations found</div>")
 
     gallery_data = []
     product_list = []
@@ -257,7 +268,7 @@ def recommend(product):
         gallery_data.append(format_gallery_item(row, badge_str))
         product_list.append(name)
         
-    return gallery_data, product_list, gr.update(visible=True), gr.update(visible=True), gr.update(visible=False), gr.update(visible=False, value="") 
+    return gr.update(visible=True, value=gallery_data), gr.update(visible=False), product_list, gr.update(visible=True), gr.update(visible=False), gr.update(visible=False, value="") 
 
 
 def on_select(evt: gr.SelectData, product_list):
@@ -267,15 +278,22 @@ def on_select(evt: gr.SelectData, product_list):
         return (
             selected_name, 
             img, title, price, desc, stats, 
-            gr.update(visible=False),
-            gr.update(visible=False),
-            gr.update(visible=True),  
-            gr.update(visible=False)
+            gr.update(visible=False), # gallery_main
+            gr.update(visible=False), # gallery_secondary
+            gr.update(visible=False), # input_group
+            gr.update(visible=True),  # detail_view
+            gr.update(visible=False)  # empty_msg
         )
-    return gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update()
+    return gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update(), gr.update()
 
 def back_to_results():
-    return gr.update(visible=True), gr.update(visible=False)
+    # Note: We can't easily remember which gallery was active without extra state. 
+    # For now, default to Home view interaction style or just show what was likely active?
+    # Simpler: Make both visible=False, and user has to click nav? No, that's bad.
+    # Quick fix: Show gallery_main by default (Home) or we need a state to track "active_tab".
+    # User didn't ask for "active tab state", just split. 
+    # Let's assume Back -> Home/Main for now, or just show the Main gallery.
+    return gr.update(visible=True), gr.update(visible=False), gr.update(visible=False)
 
 def like_from_detail(product):
     return like_product(product)
@@ -309,7 +327,6 @@ body, html, .gradio-container {
     padding: 25px !important;
     border-right: 1px solid #e5e7eb;
     flex-shrink: 0 !important;
-
 }
 
 
@@ -388,6 +405,63 @@ body, html, .gradio-container {
 
 /* Hide detail view borders */
 .group-container { border: none !important; padding: 0 !important; }
+
+/* ======================================
+   SECONDARY PRODUCT CARDS (SMALL)
+   Used for: Recently Viewed, Liked, Wishlist
+   ====================================== */
+
+.secondary-gallery {
+    width: 100%;
+}
+
+/* Always 2 cards per row */
+.secondary-gallery .grid-wrap,
+.secondary-gallery > div > div {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+}
+
+/* Smaller card container */
+.secondary-gallery button,
+.secondary-gallery .gallery-item {
+    background: #1f2937 !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.35) !important;
+    min-height: auto !important;
+}
+
+/* Smaller images */
+/* Smaller images */
+.secondary-gallery img {
+    height: 250px !important;
+    width: 100% !important;
+    object-fit: contain !important;
+    background: #ffffff !important;
+    padding: 10px !important;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+/* Compact text */
+.secondary-gallery .caption-label {
+    padding: 10px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    background: #1f2937 !important;
+    color: #f3f4f6 !important;
+}
+
+/* Hide Fullscreen/Maximize & Share Buttons Globally */
+button[aria-label="Fullscreen"],
+button[aria-label="Maximize"],
+button[aria-label="Share"],
+.share-button,
+.fullscreen-button {
+    display: none !important;
+}
+
 """
 
 
@@ -401,7 +475,7 @@ with gr.Blocks(theme=gr.themes.Soft()) as app:
             gr.HTML("""
                 <div style='text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; padding: 40px;'>
                     <h1 style='font-size: 4em; font-weight: 800; margin-bottom: 20px; color: white;'>🛍️ ShopSense</h1>
-                    <p style='font-size: 1.5em; color: #e5e7eb; margin-top: 0;'>Smart AI-Powered Recommendations</p>
+                    <p style='font-size: 1.5em; color: #e5e7eb; margin-top: 0;'>Smart Association-rule based Recommendations</p>
                 </div>
             """)
         with gr.Column(scale=1):
@@ -432,17 +506,30 @@ with gr.Blocks(theme=gr.themes.Soft()) as app:
                 dropdown = gr.Dropdown(products_df["product_name"].tolist(), label="Select Product")
                 rec_btn = gr.Button("Get Recommendations")
             
-            
-            gallery_view = gr.Gallery(
+            # --- MAIN GALLERY (Large cards) ---
+            gallery_main = gr.Gallery(
                 label="Products", 
                 show_label=False, 
                 visible=False,
                 allow_preview=False,
                 object_fit="contain",
                 height="auto",
-                elem_id="product-gallery", 
+                elem_id="product-gallery",  # Uses Large CSS
                 columns=2 
             )
+
+            # --- SECONDARY GALLERY (Compact cards) ---
+            gallery_secondary = gr.Gallery(
+                label="Other Items",
+                show_label=False,
+                visible=False,
+                allow_preview=False,
+                object_fit="contain",
+                height="auto",
+                elem_classes=["secondary-gallery"], # Uses Compact CSS
+                columns=2
+            )
+
             empty_msg = gr.HTML(visible=True, value="<div style='text-align:center; padding:50px;'><h3>👋 Welcome Back!</h3><p>Select a product to get started.</p></div>")
 
             
@@ -464,37 +551,48 @@ with gr.Blocks(theme=gr.themes.Soft()) as app:
     signup_btn.click(signup, [un, pw], [login_view, main_view, profile, liked_count, cart_count, status])
     logout_btn.click(logout, outputs=[login_view, main_view, profile, liked_count, cart_count, status])
 
-    
+    # NOTE: Output order must match functions!
+    # home_dashboard: gallery_main, gallery_secondary, detail_view, empty_msg, input_group
     home_btn.click(
         home_dashboard, 
-        outputs=[input_group, gallery_view, detail_view, empty_msg]
+        outputs=[gallery_main, gallery_secondary,  detail_view, empty_msg, input_group]
     )
+
+    # liked, cart, recent: gallery_main, gallery_secondary, current_products, input_group, detail_view, empty_msg
     liked_btn.click(
         liked_dashboard, 
-        outputs=[gallery_view, current_products_state, input_group, gallery_view, detail_view, empty_msg]
+        outputs=[gallery_main, gallery_secondary, current_products_state, input_group, detail_view, empty_msg]
     )
     cart_btn.click(
         cart_dashboard, 
-        outputs=[gallery_view, current_products_state, input_group, gallery_view, detail_view, empty_msg]
+        outputs=[gallery_main, gallery_secondary, current_products_state, input_group, detail_view, empty_msg]
     )
     recent_btn.click(
         recent_dashboard, 
-        outputs=[gallery_view, current_products_state, input_group, gallery_view, detail_view, empty_msg]
+        outputs=[gallery_main, gallery_secondary, current_products_state, input_group, detail_view, empty_msg]
     )
 
+    # recommend: gallery_main, gallery_secondary, current_products, input_group, detail_view, empty_msg
     rec_btn.click(
         recommend, 
         inputs=[dropdown], 
-        outputs=[gallery_view, current_products_state, input_group, gallery_view, detail_view, empty_msg]
+        outputs=[gallery_main, gallery_secondary, current_products_state, input_group, detail_view, empty_msg]
     )
 
-    gallery_view.select(
+    # Select handlers: Need ONE for each gallery
+    gallery_main.select(
         on_select,
         inputs=[current_products_state],
-        outputs=[selected_product_state, detail_img, detail_title, detail_price, detail_desc, detail_stats, input_group, gallery_view, detail_view, empty_msg]
+        outputs=[selected_product_state, detail_img, detail_title, detail_price, detail_desc, detail_stats, gallery_main, gallery_secondary, input_group, detail_view, empty_msg]
     )
 
-    back_btn.click(back_to_results, outputs=[gallery_view, detail_view])
+    gallery_secondary.select(
+        on_select,
+        inputs=[current_products_state],
+        outputs=[selected_product_state, detail_img, detail_title, detail_price, detail_desc, detail_stats, gallery_main, gallery_secondary, input_group, detail_view, empty_msg]
+    )
+
+    back_btn.click(back_to_results, outputs=[gallery_main, gallery_secondary, detail_view])
     detail_like_btn.click(like_from_detail, selected_product_state, [liked_count, cart_count])
     detail_cart_btn.click(cart_from_detail, selected_product_state, [liked_count, cart_count])
 
