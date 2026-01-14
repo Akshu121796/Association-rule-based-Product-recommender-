@@ -1,9 +1,4 @@
----
-title: association-rule-recommender
-app_file: app.py
-sdk: gradio
-sdk_version: 6.2.0
----
+
 # 🛍️ ShopSense - Product Recommendation System
 
 A beginner-friendly e-commerce product recommender app using **Association Rule Mining (Apriori)** with a modern, clean UI built with Gradio.
@@ -31,6 +26,12 @@ A beginner-friendly e-commerce product recommender app using **Association Rule 
 - **pandas** - Data manipulation
 - **numpy** - Numerical operations
 
+---
+title: association-rule-recommender
+app_file: app.py
+sdk: gradio
+sdk_version: 6.2.0
+---
 ## 📦 Installation & Run Locally
 
 ```bash
